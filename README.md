@@ -25,6 +25,6 @@ This repository contains diffusion equation code using runge-kutta method.
 I tested Visual C++ 19.29.30142.1 for x64 and Ryzen 5850U, 32GiB machine, and /O2 command line option.  
 TGV means Temporary Grid Variable.
 | # | with TGV | without TGV |
---------------------------------
+| - | -------- | ----------- |
 | 1 |  60 sec  |   98 sec    |
 | 2 |  61 sec  |   98 sec    | 
