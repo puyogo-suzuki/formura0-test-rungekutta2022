@@ -1,0 +1,27 @@
+total_grid_points :: 100
+
+global double q
+double dx = 1/total_grid_points.1
+double dt = 0.1*dx
+
+diff = fun(q) (q[-1] - q[0]) * dt / dx
+
+init
+  q = if i1> 20 then 0.0 else 1.0
+end
+
+step 1:100
+  k1 = diff(q)
+  k2 = diff(q + k1/2)
+  k3 = diff(q + k2/2)
+  k4 = diff(q + k3)
+  q = q + (k1 / 6 + k2 / 3 + k3 / 3 + k4 / 6)
+end
+
+step 0:1
+  k1 = 0.0
+  k2 = 0.0
+  k3 = 0.0
+  k4 = 0.0
+  q = 1.0
+end
