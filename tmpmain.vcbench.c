@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-
+#include <Windows.h>
+#pragma comment(lib, "winmm.lib")
 
 #define TRUE 1
 #define FALSE 0
@@ -125,22 +126,20 @@ void formura_forward(Formura0Navi* data)
 }
 
 int main(void) {
+  LARGE_INTEGER start, freq, end;
+  if(!QueryPerformanceFrequency(&freq)) return 0;
   Formura0Navi data;
+  if(!QueryPerformanceCounter(&start)) return 0;
   if(!formura_initialize(&data)) {
     printf("Allocation failed.\n");
     return 0;
   }
+  if(!QueryPerformanceCounter(&start)) return 0;
   formura_setup(&data, NULL);
-  printf("%lf", data.q_prev[0]);
-  for(int q = 1; q < 100; ++q)
-    printf(",%lf", data.q_prev[q]);
-  printf("\n");
-  for(int i = 0; i < 100000; ++i) {
+  for(int i = 0; i < 100000000; ++i) {
     formura_forward(&data);
-    printf("%lf", data.q_prev[0]);
-    for(int q = 1; q < 100; ++q)
-      printf(",%lf", data.q_prev[q]);
-    printf("\n");
   }
+  if(!QueryPerformanceCounter(&end)) return 0;
+  printf("%lf,", (double)(end.QuadPart - start.QuadPart) * 1000 / freq.QuadPart);
   return 0;
 }
