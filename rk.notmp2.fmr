@@ -1,4 +1,4 @@
-total_grid_points :: 100
+total_grid_points :: 1000000
 
 global double q
 double dx = 1/total_grid_points.1
@@ -7,10 +7,10 @@ double dt = 0.1*dx
 diff = fun(q) (q[-1] - q[0]) * dt / dx
 
 init
-  q = if i1> 20 then 0.0 else 1.0
+  q = if i1>500 then 0.0 else 1.0
 end
 
-step 4:100
+step 4:1000000
   k1 = diff(q)
   k2 = diff(q + k1/2)
   k3 = diff(q + k2/2)
