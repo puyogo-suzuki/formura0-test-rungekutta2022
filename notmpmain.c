@@ -29,7 +29,7 @@ typedef struct Formura0Navi
 void formura_step(Formura0Navi* data)
 {
   //--body start--
-  for(int i1 = 5;i1 < 100; ++i1) {
+  for(int i1 = 4;i1 < 100; ++i1) {
     double localVal_0 = data->q_prev[i1];
     double localVal_1 = data->q_prev[(i1 + -1)];
     int32_t localVal_6 = 100.0;
@@ -44,7 +44,7 @@ void formura_step(Formura0Navi* data)
     data->q[i1] = (localVal_0 + (((localVal_10 / 6.0 + localVal_22 / 3.0) + localVal_38 / 3.0) + ((localVal_1 + ((localVal_14 + ((localVal_25 + (data->q_prev[(i1 + -4)] - localVal_25) * 1.0e-3 / 1.0e-2 / 2.0) - localVal_30) * 1.0e-3 / 1.0e-2 / 2.0) - localVal_35) * 1.0e-3 / 1.0e-2) - (localVal_0 + localVal_38)) * 1.0e-3 / 1.0e-2 / 6.0));
   }
   //--body end--//--body start--
-  for(int i1 = 0;i1 < 5; ++i1) {
+  for(int i1 = 0;i1 < 4; ++i1) {
     data->q[i1] = 1.0;
   }
   //--body end--
