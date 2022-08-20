@@ -1,0 +1,6 @@
+# emacs
+*~
+
+# Executable File
+*.out
+*.exe
