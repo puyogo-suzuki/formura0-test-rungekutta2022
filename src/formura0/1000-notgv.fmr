@@ -1,11 +1,11 @@
-total_grid_points :: 100,100
+total_grid_points :: 1000, 1000
 
 // ! Currently, float is partially supported.
 // (Type inferencing is incomplete.)
 // To compare with Halide, we generate double variables as float ones by modifying the template.
 
 global double q
-double dx = 1.0/total_grid_points.1
+double dx = 1/total_grid_points.1
 double dt = 0.0001*dx
 
 diff = fun(q) dt/dx/dx*(q[+1,0] + q[-1,0] + q[0, +1] + q[0, -1] - 4*q[0,0])
@@ -18,9 +18,9 @@ end
 
 step 5,5:(total_grid_points.1-5),(total_grid_points.2-5)
   k1 = diff(q)
-  k2 = diff(q + k1/2)
-  k3 = diff(q + k2/2)
-  k4 = diff(q + k3)
+  k2 = diff(q + diff(q)/2)
+  k3 = diff(q + diff(q + diff(q)/2)/2)
+  k4 = diff(q + diff(q + diff(q + diff(q)/2)/2))
   q = q + (k1 / 6 + k2 / 3 + k3 / 3 + k4 / 6)
 end
 
