@@ -5,3 +5,5 @@
 # Executable File
 *.out
 *.exe
+
+/build

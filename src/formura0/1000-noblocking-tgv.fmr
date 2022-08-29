@@ -1,5 +1,4 @@
 total_grid_points :: 1000, 1000
-//block_shape :: 100,100
 
 // ! Currently, float is partially supported.
 // (Type inferencing is incomplete.)

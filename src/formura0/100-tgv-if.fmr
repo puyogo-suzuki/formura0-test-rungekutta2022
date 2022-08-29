@@ -1,0 +1,25 @@
+total_grid_points :: 100,100
+
+// ! Currently, float is partially supported.
+// (Type inferencing is incomplete.)
+// To compare with Halide, we generate double variables as float ones by modifying the template.
+
+global double q
+double dx = 1.0/total_grid_points.1
+double dt = 0.0001*dx
+
+diff = fun(q) dt/dx/dx*(q[+1,0] + q[-1,0] + q[0, +1] + q[0, -1] - 4*q[0,0])
+
+init
+  c1 = i1 - (total_grid_points.1 / 2)
+  c2 = i2 - (total_grid_points.2 / 2)
+  q = if (c1 * c1 + c2 * c2) < 100 then 1.0 else 0.0
+end
+
+step
+  k1 = if (5 <= i1) && (5 <= i2) && (i1 < (total_grid_points.1-5)) && (i2 < total_grid_points.2 - 5) then diff(q) else 0.0
+  k2 = if (5 <= i1) && (5 <= i2) && (i1 < (total_grid_points.1-5)) && (i2 < total_grid_points.2 - 5) then diff(q + k1/2) else 0.0
+  k3 = if (5 <= i1) && (5 <= i2) && (i1 < (total_grid_points.1-5)) && (i2 < total_grid_points.2 - 5) then diff(q + k2/2) else 0.0
+  k4 = if (5 <= i1) && (5 <= i2) && (i1 < (total_grid_points.1-5)) && (i2 < total_grid_points.2 - 5) then diff(q + k3) else 0.0 
+  q = if (5 <= i1) && (5 <= i2) && (i1 < (total_grid_points.1-5)) && (i2 < total_grid_points.2 - 5) then q + (k1 / 6 + k2 / 3 + k3 / 3 + k4 / 6) else 0.0
+end

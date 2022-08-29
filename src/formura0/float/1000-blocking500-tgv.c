@@ -492,16 +492,16 @@ void formura_forward(Formura0Navi* data)
 
 int main(void) {
   Formura0Navi data;
-#if BENCH
-#if defined(_WIN32)
-  LARGE_INTEGER start, freq, end;
-  if(!QueryPerformanceFrequency(&freq)) return 0;
-  if(!QueryPerformanceCounter(&start)) return 0;
   if(!formura_initialize(&data)) {
     printf("Allocation failed.\n");
     return 0;
   }
   formura_setup(&data, NULL);
+#if BENCH
+#if defined(_WIN32)
+  LARGE_INTEGER start, freq, end;
+  if(!QueryPerformanceFrequency(&freq)) return 0;
+  if(!QueryPerformanceCounter(&start)) return 0;
   for(int i = 0; i < STEP; ++i) {
     formura_forward(&data);
   }
@@ -510,11 +510,6 @@ int main(void) {
 #else
   struct timespec start, end;
   if(clock_gettime(CLOCK_MONOTONIC, &start)) return 0;
-  if(!formura_initialize(&data)) {
-    printf("Allocation failed.\n");
-    return 0;
-  }
-  formura_setup(&data, NULL);
   for(int i = 0; i < STEP; ++i) {
     formura_forward(&data);
   }
@@ -523,11 +518,6 @@ int main(void) {
   printf("%lf,", (double)(sec * 1000*1000*1000 + (end.tv_nsec - start.tv_nsec)) / 1000.0 / 1000.0);
 #endif
 #else
-  if(!formura_initialize(&data)) {
-    printf("Allocation failed.\n");
-    return 0;
-  }
-  formura_setup(&data, NULL);
   printf("%lf", data.q_prev[0]);
   for(int q = 1; q < MAX_I1*MAX_I2; ++q)
     printf(",%lf", data.q_prev[q]);
