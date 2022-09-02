@@ -26,9 +26,7 @@ typedef struct Formura0Navi
   formura_time_t time;
   double* q;
   double* q_prev;
-  double* k13;
-  double* k23;
-  double* k33;
+
 
 } Formura0Navi;
 
@@ -41,8 +39,8 @@ void formura_step(Formura0Navi* data)
     data->q[i1] = 1.0;
   }
   //--body end--//--body start--
-  for(int i1 = 5, b1 = 5;i1 < 100; ++i1, ++b1) {
-    int32_t localVal_3 = 100.0;
+  for(int i1 = 5, b1 = 5;i1 < 1000000; ++i1, ++b1) {
+    int32_t localVal_3 = 1000000.0;
     double localVal_7 = data->q_prev[i1];
     double localVal_8 = data->q_prev[(i1 + -1)];
     double localVal_10 = 1.0e-2 * (localVal_8 - localVal_7);
@@ -65,9 +63,9 @@ void formura_step(Formura0Navi* data)
 
 
 int formura_initialize(Formura0Navi* data){
-  if((data->q = (double *)malloc(sizeof(double)*100)) == 0)
+  if((data->q = (double *)malloc(sizeof(double)*1000000)) == 0)
     return 0;
-  if((data->q_prev = (double *)malloc(sizeof(double)*100)) == 0)
+  if((data->q_prev = (double *)malloc(sizeof(double)*1000000)) == 0)
     return 0;
 
   return 1;
@@ -77,7 +75,7 @@ void formura_setup(Formura0Navi* data, char* dumpdata)
 {
   data->time = 0;
   //--body start--
-  for(int i1 = 0, b1 = 0;i1 < 100; ++i1, ++b1) {
+  for(int i1 = 0, b1 = 0;i1 < 1000000; ++i1, ++b1) {
     data->q[i1] = (i1 < 20.0 ? 1.0 : 0.0);
   }
   //--body end--

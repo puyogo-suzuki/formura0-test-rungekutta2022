@@ -1,4 +1,5 @@
-total_grid_points :: 100
+total_grid_points :: 1000000
+// block_shape :: 50000
 
 // ! Formura0 also can switch TGV via compiler option.
 

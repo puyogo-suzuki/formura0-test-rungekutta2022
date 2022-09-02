@@ -16,7 +16,7 @@
 #define MAX(x, y) ((x) > (y) ? (x) : (y))
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 
-#define MAX_I1 100
+#define MAX_I1 1000000
 
 
 typedef uint64_t formura_time_t;
@@ -37,42 +37,76 @@ typedef struct Formura0Navi
 void formura_step(Formura0Navi* data)
 {
   //--body start--
-  for(int i1 = 0, b1 = 0;i1 < 5; ++i1, ++b1) {
-    data->k13[b1] = 0.0;
-  }
-  //--body end--//--body start--
-  for(int i1 = 5, b1 = 5;i1 < 100; ++i1, ++b1) {
-    int32_t localVal_3 = 100.0;
-    data->k13[b1] = 1.0e-2 * (data->q_prev[(i1 + -1)] - data->q_prev[i1]);
-  }
-  //--body end--//--body start--
-  for(int i1 = 0, b1 = 0;i1 < 5; ++i1, ++b1) {
-    data->k23[b1] = 0.0;
-  }
-  //--body end--//--body start--
-  for(int i1 = 5, b1 = 5;i1 < 100; ++i1, ++b1) {
-    int32_t localVal_3 = 100.0;
-    data->k23[b1] = 1.0e-2 * ((data->q_prev[(i1 + -1)] + data->k13[(b1 + -1)] / 2.0) - (data->q_prev[i1] + data->k13[b1] / 2.0));
-  }
-  //--body end--//--body start--
-  for(int i1 = 0, b1 = 0;i1 < 5; ++i1, ++b1) {
-    data->k33[b1] = 0.0;
-  }
-  //--body end--//--body start--
-  for(int i1 = 5, b1 = 5;i1 < 100; ++i1, ++b1) {
-    int32_t localVal_3 = 100.0;
-    data->k33[b1] = 1.0e-2 * ((data->q_prev[(i1 + -1)] + data->k23[(b1 + -1)] / 2.0) - (data->q_prev[i1] + data->k23[b1] / 2.0));
-  }
-  //--body end--//--body start--
-  for(int i1 = 0, b1 = 0;i1 < 5; ++i1, ++b1) {
-    data->q[i1] = 1.0;
-  }
-  //--body end--//--body start--
-  for(int i1 = 5, b1 = 5;i1 < 100; ++i1, ++b1) {
-    int32_t localVal_3 = 100.0;
-    double localVal_7 = data->q_prev[i1];
-    double localVal_31 = data->k33[b1];
-    data->q[i1] = (localVal_7 + (((data->k13[b1] / 6.0 + data->k23[b1] / 3.0) + localVal_31 / 3.0) + 1.0e-2 * ((data->q_prev[(i1 + -1)] + data->k33[(b1 + -1)]) - (localVal_7 + localVal_31)) / 6.0));
+  for(int t1 = 0; t1 < 1000000; t1 += 50000) {
+    //--body start--
+    for(int i1 = MAX(t1-3, 0), i1max = MAX(t1, 0), b1 = i1 - t1; i1 < i1max; ++i1, ++b1) {
+      data->k13[(b1 + 3)] = 0.0;
+    }
+    for(int i1 = MAX(t1, 0), i1max = MIN(5, t1 + 50000 + 3), b1 = i1 - t1; i1 < i1max; ++i1, ++b1) {
+      data->k13[(b1 + 3)] = 0.0;
+    }
+    //--body end--//--body start--
+    for(int i1 = MAX(t1-3, 5), i1max = MAX(t1, 5), b1 = i1 - t1; i1 < i1max; ++i1, ++b1) {
+      int32_t localVal_3 = 1000000.0;
+      data->k13[(b1 + 3)] = 1.0e-2 * (data->q_prev[(i1 + -1)] - data->q_prev[i1]);
+    }
+    for(int i1 = MAX(t1, 5), i1max = MIN(1000000, t1 + 50000 + 3), b1 = i1 - t1; i1 < i1max; ++i1, ++b1) {
+      int32_t localVal_3 = 1000000.0;
+      data->k13[(b1 + 3)] = 1.0e-2 * (data->q_prev[(i1 + -1)] - data->q_prev[i1]);
+    }
+    //--body end--//--body start--
+    for(int i1 = MAX(t1-2, 0), i1max = MAX(t1, 0), b1 = i1 - t1; i1 < i1max; ++i1, ++b1) {
+      data->k23[(b1 + 2)] = 0.0;
+    }
+    for(int i1 = MAX(t1, 0), i1max = MIN(5, t1 + 50000 + 2), b1 = i1 - t1; i1 < i1max; ++i1, ++b1) {
+      data->k23[(b1 + 2)] = 0.0;
+    }
+    //--body end--//--body start--
+    for(int i1 = MAX(t1-2, 5), i1max = MAX(t1, 5), b1 = i1 - t1; i1 < i1max; ++i1, ++b1) {
+      int32_t localVal_3 = 1000000.0;
+      data->k23[(b1 + 2)] = 1.0e-2 * ((data->q_prev[(i1 + -1)] + data->k13[(b1 + -1 + 3)] / 2.0) - (data->q_prev[i1] + data->k13[(b1 + 3)] / 2.0));
+    }
+    for(int i1 = MAX(t1, 5), i1max = MIN(1000000, t1 + 50000 + 2), b1 = i1 - t1; i1 < i1max; ++i1, ++b1) {
+      int32_t localVal_3 = 1000000.0;
+      data->k23[(b1 + 2)] = 1.0e-2 * ((data->q_prev[(i1 + -1)] + data->k13[(b1 + -1 + 3)] / 2.0) - (data->q_prev[i1] + data->k13[(b1 + 3)] / 2.0));
+    }
+    //--body end--//--body start--
+    for(int i1 = MAX(t1-1, 0), i1max = MAX(t1, 0), b1 = i1 - t1; i1 < i1max; ++i1, ++b1) {
+      data->k33[(b1 + 1)] = 0.0;
+    }
+    for(int i1 = MAX(t1, 0), i1max = MIN(5, t1 + 50000 + 1), b1 = i1 - t1; i1 < i1max; ++i1, ++b1) {
+      data->k33[(b1 + 1)] = 0.0;
+    }
+    //--body end--//--body start--
+    for(int i1 = MAX(t1-1, 5), i1max = MAX(t1, 5), b1 = i1 - t1; i1 < i1max; ++i1, ++b1) {
+      int32_t localVal_3 = 1000000.0;
+      data->k33[(b1 + 1)] = 1.0e-2 * ((data->q_prev[(i1 + -1)] + data->k23[(b1 + -1 + 2)] / 2.0) - (data->q_prev[i1] + data->k23[(b1 + 2)] / 2.0));
+    }
+    for(int i1 = MAX(t1, 5), i1max = MIN(1000000, t1 + 50000 + 1), b1 = i1 - t1; i1 < i1max; ++i1, ++b1) {
+      int32_t localVal_3 = 1000000.0;
+      data->k33[(b1 + 1)] = 1.0e-2 * ((data->q_prev[(i1 + -1)] + data->k23[(b1 + -1 + 2)] / 2.0) - (data->q_prev[i1] + data->k23[(b1 + 2)] / 2.0));
+    }
+    //--body end--//--body start--
+    for(int i1 = MAX(t1-0, 0), i1max = MAX(t1, 0), b1 = i1 - t1; i1 < i1max; ++i1, ++b1) {
+      data->q[i1] = 1.0;
+    }
+    for(int i1 = MAX(t1, 0), i1max = MIN(5, t1 + 50000 + 0), b1 = i1 - t1; i1 < i1max; ++i1, ++b1) {
+      data->q[i1] = 1.0;
+    }
+    //--body end--//--body start--
+    for(int i1 = MAX(t1-0, 5), i1max = MAX(t1, 5), b1 = i1 - t1; i1 < i1max; ++i1, ++b1) {
+      int32_t localVal_3 = 1000000.0;
+      double localVal_7 = data->q_prev[i1];
+      double localVal_31 = data->k33[(b1 + 1)];
+      data->q[i1] = (localVal_7 + (((data->k13[(b1 + 3)] / 6.0 + data->k23[(b1 + 2)] / 3.0) + localVal_31 / 3.0) + 1.0e-2 * ((data->q_prev[(i1 + -1)] + data->k33[(b1 + -1 + 1)]) - (localVal_7 + localVal_31)) / 6.0));
+    }
+    for(int i1 = MAX(t1, 5), i1max = MIN(1000000, t1 + 50000 + 0), b1 = i1 - t1; i1 < i1max; ++i1, ++b1) {
+      int32_t localVal_3 = 1000000.0;
+      double localVal_7 = data->q_prev[i1];
+      double localVal_31 = data->k33[(b1 + 1)];
+      data->q[i1] = (localVal_7 + (((data->k13[(b1 + 3)] / 6.0 + data->k23[(b1 + 2)] / 3.0) + localVal_31 / 3.0) + 1.0e-2 * ((data->q_prev[(i1 + -1)] + data->k33[(b1 + -1 + 1)]) - (localVal_7 + localVal_31)) / 6.0));
+    }
+    //--body end--
   }
   //--body end--
 }
@@ -84,15 +118,15 @@ void formura_step(Formura0Navi* data)
 
 
 int formura_initialize(Formura0Navi* data){
-  if((data->q = (double *)malloc(sizeof(double)*100)) == 0)
+  if((data->q = (double *)malloc(sizeof(double)*1000000)) == 0)
     return 0;
-  if((data->q_prev = (double *)malloc(sizeof(double)*100)) == 0)
+  if((data->q_prev = (double *)malloc(sizeof(double)*1000000)) == 0)
     return 0;
-  if((data->k13 = (double *)malloc(sizeof(double)*100)) == 0)
+  if((data->k13 = (double *)malloc(sizeof(double)*50006)) == 0)
     return 0;
-  if((data->k23 = (double *)malloc(sizeof(double)*100)) == 0)
+  if((data->k23 = (double *)malloc(sizeof(double)*50004)) == 0)
     return 0;
-  if((data->k33 = (double *)malloc(sizeof(double)*100)) == 0)
+  if((data->k33 = (double *)malloc(sizeof(double)*50002)) == 0)
     return 0;
 
   return 1;
@@ -102,8 +136,15 @@ void formura_setup(Formura0Navi* data, char* dumpdata)
 {
   data->time = 0;
   //--body start--
-  for(int i1 = 0, b1 = 0;i1 < 100; ++i1, ++b1) {
-    data->q[i1] = (i1 < 20.0 ? 1.0 : 0.0);
+  for(int t1 = 0; t1 < 1000000; t1 += 50000) {
+    //--body start--
+    for(int i1 = MAX(t1-0, 0), i1max = MAX(t1, 0), b1 = i1 - t1; i1 < i1max; ++i1, ++b1) {
+      data->q[i1] = (i1 < 20.0 ? 1.0 : 0.0);
+    }
+    for(int i1 = MAX(t1, 0), i1max = MIN(1000000, t1 + 50000 + 0), b1 = i1 - t1; i1 < i1max; ++i1, ++b1) {
+      data->q[i1] = (i1 < 20.0 ? 1.0 : 0.0);
+    }
+    //--body end--
   }
   //--body end--
   {
