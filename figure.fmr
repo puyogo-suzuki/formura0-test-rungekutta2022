@@ -1,0 +1,21 @@
+total_grid_points :: 10,10
+
+global double q
+double dx = 1.0/total_grid_points.1
+double dt = 0.0001*dx
+
+diff = fun(q) dt/dx/dx*(q[+1,0] + q[-1,0] + q[0, +1] + q[0, -1] - 4*q[0,0])
+
+init
+  c1 = i1 - (total_grid_points.1 / 2)
+  c2 = i2 - (total_grid_points.2 / 2)
+  q = if (c1 * c1 + c2 * c2) < 2 then 1.0 else 0.0
+end
+
+step
+  k1 = diff(q)
+  k2 = diff(q + k1/2)
+  k3 = diff(q + k2/2)
+  k4 = diff(q + k3)
+  q = q + (k1 / 6 + k2 / 3 + k3 / 3 + k4 / 6)
+end

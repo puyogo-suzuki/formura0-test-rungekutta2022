@@ -1,0 +1,29 @@
+total_grid_points :: 100
+
+// ! Formura0 also can switch TGV via compiler option.
+
+global double q
+double dx = 1.0/total_grid_points.1
+double dt = 0.01*dx
+
+diff = fun(q) dt/dx*(q[-1] - q[0])
+
+init
+   q = if i1 < 20 then 1.0 else 0.0
+end
+
+step 5:total_grid_points.1
+  k1 = diff(q)
+  k2 = diff(q + k1/2)
+  k3 = diff(q + k2/2)
+  k4 = diff(q + k3)
+  q = q + (k1 / 6 + k2 / 3 + k3 / 3 + k4 / 6)
+end
+
+step 0:5
+  k1 = 0.0
+  k2 = 0.0
+  k3 = 0.0
+  k4 = 0.0
+  q = 1.0
+end
