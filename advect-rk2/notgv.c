@@ -27,7 +27,7 @@ typedef struct Formura0Navi
   double* q;
   double* q_prev;
 
-
+  
 } Formura0Navi;
 
 
@@ -43,15 +43,8 @@ void formura_step(Formura0Navi* data)
     int32_t localVal_3 = 1000000.0;
     double localVal_7 = data->q_prev[i1];
     double localVal_8 = data->q_prev[(i1 + -1)];
-    double localVal_10 = 1.0e-2 * (localVal_8 - localVal_7);
-    double localVal_14 = data->q_prev[(i1 + -2)];
-    double localVal_18 = (localVal_8 + 1.0e-2 * (localVal_14 - localVal_8) / 2.0);
-    double localVal_20 = 1.0e-2 * (localVal_18 - (localVal_7 + localVal_10 / 2.0));
-    double localVal_23 = data->q_prev[(i1 + -3)];
-    double localVal_27 = (localVal_14 + 1.0e-2 * (localVal_23 - localVal_14) / 2.0);
-    double localVal_31 = (localVal_8 + 1.0e-2 * (localVal_27 - localVal_18) / 2.0);
-    double localVal_33 = 1.0e-2 * (localVal_31 - (localVal_7 + localVal_20 / 2.0));
-    data->q[i1] = (localVal_7 + (((localVal_10 / 6.0 + localVal_20 / 3.0) + localVal_33 / 3.0) + 1.0e-2 * ((localVal_8 + 1.0e-2 * ((localVal_14 + 1.0e-2 * ((localVal_23 + 1.0e-2 * (data->q_prev[(i1 + -4)] - localVal_23) / 2.0) - localVal_27) / 2.0) - localVal_31)) - (localVal_7 + localVal_33)) / 6.0));
+    double localVal_10 = 0.1 * (localVal_8 - localVal_7);
+    data->q[i1] = (localVal_7 + (localVal_10 + 0.1 * ((localVal_8 + 0.1 * (data->q_prev[(i1 + -2)] - localVal_8)) - (localVal_7 + localVal_10))) / 2.0);
   }
   //--body end--
 }
